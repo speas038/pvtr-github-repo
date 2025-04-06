@@ -254,29 +254,29 @@ func verifyDependencyManifests(payloadData interface{}) (layer4.Result, string) 
 		return layer4.Unknown, message
 	}
 
-	// if data.Repository.DefaultBranchRef.Target.Tree.Entries == nil {
-	// 	return layer4.Unknown, "Repository tree entries not available"
-	// }
+	if data.Repository.Object.Tree.Entries == nil {
+		return layer4.Unknown, "Repository tree entries not available"
+	}
 
-	// entries := data.Repository.DefaultBranchRef.Target.Tree.Entries
+	entries := data.Repository.Object.Tree.Entries
 	manifests := data.Repository.DependencyGraphManifests.Nodes
 
 	foundManifests := make(map[string]ManifestResult)
 	manifestErrors := []string{}
 
-	// // Check repository contents for dependency files
-	// for _, entry := range entries {
-	// 	for _, manifest := range knownManifests {
-	// 		if isManifestFile(entry.Name, manifest.Filename) {
-	// 			result := ManifestResult{
-	// 				Found:    true,
-	// 				Language: manifest.Language,
-	// 				Manifest: entry.Name,
-	// 			}
-	// 			foundManifests[manifest.Language] = result
-	// 		}
-	// 	}
-	// }
+	// Check repository contents for dependency files
+	for _, entry := range entries {
+		for _, manifest := range knownManifests {
+			if isManifestFile(entry.Name, manifest.Filename) {
+				result := ManifestResult{
+					Found:    true,
+					Language: manifest.Language,
+					Manifest: entry.Name,
+				}
+				foundManifests[manifest.Language] = result
+			}
+		}
+	}
 
 	if len(manifestErrors) > 0 {
 		return layer4.Failed, fmt.Sprintf("Dependency management issues found:\n%s",

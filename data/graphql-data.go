@@ -18,6 +18,16 @@ type GraphqlRepoData struct {
 		HasIssuesEnabled        bool
 		IsSecurityPolicyEnabled bool
 
+		Object struct {
+			Tree struct {
+				Entries []struct {
+					Name   string
+					Type   string // "blob" for files, "tree" for directories
+					Path   string
+				}
+			} `graphql:"... on Tree"`
+		} `graphql:"object(expression: \"HEAD:\")"`
+
 		DefaultBranchRef struct {
 			Name          string
 			RefUpdateRule struct {
@@ -35,13 +45,6 @@ type GraphqlRepoData struct {
 			}
 
 			Target struct {
-				// Tree struct {
-				// 	Entries []struct {
-				// 		Name string
-				// 		Type string
-				// 		Path string
-				// 	}
-				// }
 				OID    string `graphql:"oid"` // Latest commit SHA
 				Commit struct {
 					Status struct {
