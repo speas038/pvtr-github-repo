@@ -98,7 +98,6 @@ type GraphqlRepoData struct {
 					Nodes      []struct {
 						PackageName    string
 						Requirements   string
-						// Repository string
 					}
 				} `graphql:"dependencies(first: 100)"`
 			} `graphql:"nodes"`
@@ -107,7 +106,6 @@ type GraphqlRepoData struct {
 			Nodes []struct {
 				TagName string
 				Name    string
-				// Draft   bool
 				Assets  struct {
 					Nodes []struct {
 						Name        string
