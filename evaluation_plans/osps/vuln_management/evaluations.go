@@ -158,8 +158,8 @@ func OSPS_VM_06() (evaluation *layer4.ControlEvaluation) {
 		},
 		[]layer4.AssessmentStep{
 			reusable_steps.HasSecurityInsightsFile,
-			sastToolDefined,
 			reusable_steps.HasDependencyManagementPolicy,
+			sastToolDefined,
 		},
 	)
 
