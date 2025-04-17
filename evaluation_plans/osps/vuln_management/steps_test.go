@@ -23,6 +23,31 @@ func TestSastToolDefined(t *testing.T) {
 		{
 			expectedResult: layer4.Passed,
 			expectedMessage: "Static Application Security Testing documented in Security Insights",
+			assertionMessage: "Test for SAST integration enabled",
+			payloadData:    data.Payload{
+				RestData: &data.RestData {
+					Insights: si.SecurityInsights{
+						Repository: si.Repository{
+							Security: si.SecurityInfo{
+								Tools: []si.Tool{
+									{
+										Type: "SAST",
+										Integration: si.Integration{
+											Adhoc: true,
+										},
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			
+		},
+		{
+			expectedResult: layer4.Failed,
+			expectedMessage: "No Static Application Security Testing documented in Security Insights",
+			assertionMessage: "Test for SAST integration present but not explicitly enabled",
 			payloadData:    data.Payload{
 				RestData: &data.RestData {
 					Insights: si.SecurityInsights{
@@ -38,11 +63,12 @@ func TestSastToolDefined(t *testing.T) {
 					},
 				},
 			},
-			assertionMessage: "Static Application Security Testing documented in Security Insights",
+			
 		},
 		{
 			expectedResult: layer4.Failed,
 			expectedMessage: "No Static Application Security Testing documented in Security Insights",
+			assertionMessage: "Test for no SAST tool defined",
 			payloadData:    data.Payload{
 				RestData: &data.RestData {
 					Insights: si.SecurityInsights{
@@ -58,7 +84,7 @@ func TestSastToolDefined(t *testing.T) {
 					},
 				},
 			},
-			assertionMessage: "No Static Application Security Testing documented in Security Insights",
+			
 		},
 	}
 	

@@ -1,6 +1,8 @@
 package vuln_management
 
 import (
+	"slices"
+
 	"github.com/revanite-io/sci/pkg/layer4"
 
 	"github.com/revanite-io/pvtr-github-repo/evaluation_plans/reusable_steps"
@@ -35,7 +37,12 @@ func sastToolDefined(payloadData interface{}, _ map[string]*layer4.Change) (resu
 
 	for _,tool := range data.Insights.Repository.Security.Tools {
 		if tool.Type == "SAST" {
-			return layer4.Passed, "Static Application Security Testing documented in Security Insights"
+			
+			enabled  := []bool { tool.Integration.Adhoc, tool.Integration.CI, tool.Integration.Release }
+			
+			if slices.Contains(enabled, true) {
+				return layer4.Passed, "Static Application Security Testing documented in Security Insights"
+			}
 		}
 	}
 
