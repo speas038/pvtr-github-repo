@@ -57,6 +57,6 @@ require (
 )
 
 // Uncomment if you're working on a dependency locally
-replace github.com/privateerproj/privateer-sdk => ../../privateerproj/privateer-sdk
+// replace github.com/privateerproj/privateer-sdk => ../../privateerproj/privateer-sdk
 
 // replace github.com/revanite-io/sci => ../sci
