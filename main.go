@@ -5,6 +5,7 @@ import (
 
 	"os"
 
+	"github.com/revanite-io/pvtr-github-repo/baseline"
 	"github.com/revanite-io/pvtr-github-repo/data"
 	"github.com/revanite-io/pvtr-github-repo/evaluation_plans"
 
@@ -40,6 +41,25 @@ func main() {
 
 	// Evaluation Suite may optionally take a payload to selectively override the data specified in NewVessel
 	pvtrVessel.AddEvaluationSuite("OSPS_B", data.Loader, evaluation_plans.OSPS_B)
+
+	//TODO create a map of key value pairs key -> assessment.requireentId value -> recommendation from the baseline reader package
+
+	br := baseline.NewReader()
+
+	data, err := br.ReadAllYAMLFiles()
+	if err != nil {
+		//do something
+	}
+
+	recommendation := data.Catalog.ControlFamilies[0].Controls[0].AssessmentRequirements[0].Recommendation
+	
+	for _, family := range data.Catalog.ControlFamilies {
+		for control := range family.Controls{
+			for requirement := range control.
+		}
+	}
+
+
 
 	runCmd := command.NewPluginCommands(
 		PluginName,

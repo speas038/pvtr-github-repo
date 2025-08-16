@@ -70,6 +70,7 @@ func OSPS_AC_03() (evaluation *layer4.ControlEvaluation) {
 			reusable_steps.IsCodeRepo,
 			branchProtectionRestrictsPushes, // This checks branch protection, but not rulesets yet
 		},
+		
 	)
 
 	evaluation.AddAssessment(
