@@ -39,26 +39,11 @@ func main() {
 	// NewVessel may take a payload for all suites to reference
 	pvtrVessel := pluginkit.NewEvaluationOrchestrator(PluginName, data.Loader, RequiredVars)
 
-	// Evaluation Suite may optionally take a payload to selectively override the data specified in NewVessel
-	pvtrVessel.AddEvaluationSuite("OSPS_B", data.Loader, evaluation_plans.OSPS_B)
-
-	//TODO create a map of key value pairs key -> assessment.requireentId value -> recommendation from the baseline reader package
-
 	br := baseline.NewReader()
+	requirementMap, err := br.GetAssessmentRequirements()
 
-	data, err := br.ReadAllYAMLFiles()
-	if err != nil {
-		//do something
-	}
-
-	recommendation := data.Catalog.ControlFamilies[0].Controls[0].AssessmentRequirements[0].Recommendation
-	
-	for _, family := range data.Catalog.ControlFamilies {
-		for control := range family.Controls{
-			for requirement := range control.
-		}
-	}
-
+	// Evaluation Suite may optionally take a payload to selectively override the data specified in NewVessel
+	pvtrVessel.AddEvaluationSuite("OSPS_B", data.Loader, evaluation_plans.OSPS_B, requirementMap)
 
 
 	runCmd := command.NewPluginCommands(
@@ -69,7 +54,7 @@ func main() {
 		pvtrVessel,
 	)
 
-	err := runCmd.Execute()
+	err = runCmd.Execute()
 	if err != nil {
 		os.Exit(1)
 	}

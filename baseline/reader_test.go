@@ -1,9 +1,10 @@
 package baseline
 
 import (
-	"fmt"
 	"os"
 	"testing"
+
+	"github.com/revanite-io/sci/layer2"
 )
 
 func TestReader_ReadAllYAMLFiles(t *testing.T) {
@@ -87,18 +88,25 @@ func TestBuildAssessmentRequirementMap( t*testing.T){
 
 	data, err := br.ReadAllYAMLFiles()
 	if err != nil {
-		//do something
+		t.Error("TestBuildAssessmentRequirementMap Could not read Yaml files", err)
 	}
 
-	recommendation := data.Catalog.ControlFamilies[0].Controls[0].AssessmentRequirements[0].Recommendation
+	requirements := make(map[string]*layer2.AssessmentRequirement)
+
 	
 	for _,family := range data.Catalog.ControlFamilies {
 		for _,control := range family.Controls{
-			for _,requirement := range 
+			for _,requirement := range control.AssessmentRequirements{
+				requirements[requirement.Id] = &requirement
+			}
 		}
 	}
 
-	fmt.Println(recommendation)
+	expected := 60
+
+	if len(requirements) != expected {
+		t.Errorf("List of requirements - wanted: %v  got: %v \n", expected, len(requirements));
+	}
 
 }
 

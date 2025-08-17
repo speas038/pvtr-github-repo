@@ -78,6 +78,31 @@ func (r *Reader) ReadAllYAMLFiles() (*BaselineData, error) {
 	return baselineData, nil
 }
 
+func (r *Reader) GetAssessmentRequirements () (map[string]*layer2.AssessmentRequirement, error) {
+
+
+	data, err := r.ReadAllYAMLFiles()
+	if err != nil {
+		return nil,fmt.Errorf("TestBuildAssessmentRequirementMap Could not read Yaml files:", err)
+	}
+
+	requirements := make(map[string]*layer2.AssessmentRequirement)
+	
+	for _,family := range data.Catalog.ControlFamilies {
+		for _,control := range family.Controls{
+			for _,requirement := range control.AssessmentRequirements{
+				requirements[requirement.Id] = &requirement
+			}
+		}
+	}
+
+	if len(requirements) == 0 {
+		return nil, fmt.Errorf("GetAssessmentRequirements: 0 requirements found")
+	}
+
+	return requirements, err
+}
+
 // ReadYAMLFile reads a single YAML file and returns the control family data
 func (r *Reader) ReadYAMLFile(filename string) (*layer2.ControlFamily, error) {
 	filePath := filepath.Join(dataDir, filename)

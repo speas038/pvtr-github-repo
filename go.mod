@@ -3,6 +3,7 @@ module github.com/revanite-io/pvtr-github-repo // Replace this globally with you
 go 1.24.4
 
 require (
+	github.com/goccy/go-yaml v1.18.0
 	github.com/google/go-github/v71 v71.0.0
 	github.com/migueleliasweb/go-github-mock v1.4.0
 	github.com/ossf/si-tooling/v2 v2.0.5-0.20250328034800-657dc9aa9920
@@ -16,7 +17,6 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
-	github.com/goccy/go-yaml v1.18.0 // indirect
 	github.com/google/go-github/v73 v73.0.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/gorilla/mux v1.8.1 // indirect
